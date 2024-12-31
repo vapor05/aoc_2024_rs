@@ -4,7 +4,22 @@ use std::error::Error;
 pub fn part1(data: &String) -> Result<String, Box<dyn Error>> {
     let (mut left, mut right) = match create_lists(data) {
         Ok(t) => t,
-        Err(err) => return Err(err.into()),
+        Err(err) => return Err(err)
+    };
+    left.sort();
+    right.sort();
+    let mut sum: i32 = 0;
+
+    for (l, r) in left.iter().zip(right.iter()) {
+        sum += (l-r).abs();
+    }
+    return Ok(sum.to_string())
+}
+
+pub fn part2(data: &String) -> Result<String, Box<dyn Error>> {
+    let (mut left, mut right) = match create_lists(data) {
+        Ok(t) => t,
+        Err(err) => return Err(err),
     };
     left.sort();
     right.sort();

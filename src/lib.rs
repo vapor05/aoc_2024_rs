@@ -1,6 +1,7 @@
 use std::env;
 use std::error::Error;
 use std::fs;
+use std::os::unix::process;
 
 pub mod prb1;
 
@@ -13,7 +14,13 @@ pub fn run(config: Config) -> Result<String, RunError> {
         .map_err(|err| RunError(format!("failed to read problem input data: {}", err)))?;
     let solution: Result<String, RunError> = match config.problem.as_str() {
         "1" => {
-            prb1::part1(&data).map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            if config.part == "1" {
+                prb1::part1(&data).map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            } else if config.part == "2" {
+                prb1::part2(&data).map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            } else {
+                return Err(RunError(format!("no part {} for problem {}", config.part, config.problem)));
+            }
         }
         _ => {
             return Err(RunError(format!(
