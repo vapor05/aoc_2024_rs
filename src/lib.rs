@@ -1,9 +1,9 @@
 use std::env;
 use std::error::Error;
 use std::fs;
-use std::os::unix::process;
 
 pub mod prb1;
+pub mod prb2;
 
 #[derive(Debug)]
 pub struct RunError(String);
@@ -15,11 +15,31 @@ pub fn run(config: Config) -> Result<String, RunError> {
     let solution: Result<String, RunError> = match config.problem.as_str() {
         "1" => {
             if config.part == "1" {
-                prb1::part1(&data).map_err(|err| RunError(format!("failed to run problem: {}", err)))
+                prb1::part1(&data)
+                    .map_err(|err| RunError(format!("failed to run problem: {}", err)))
             } else if config.part == "2" {
-                prb1::part2(&data).map_err(|err| RunError(format!("failed to run problem: {}", err)))
+                prb1::part2(&data)
+                    .map_err(|err| RunError(format!("failed to run problem: {}", err)))
             } else {
-                return Err(RunError(format!("no part {} for problem {}", config.part, config.problem)));
+                return Err(RunError(format!(
+                    "no part {} for problem {}",
+                    config.part, config.problem
+                )));
+            }
+        }
+        "2" => {
+            if config.part == "1" {
+                prb2::part1(&data)
+                    .map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            // } 
+            // else if config.part == "2" {
+            //     prb1::part2(&data)
+            //         .map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            } else {
+                return Err(RunError(format!(
+                    "no part {} for problem {}",
+                    config.part, config.problem
+                )));
             }
         }
         _ => {
