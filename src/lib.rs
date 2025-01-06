@@ -4,6 +4,7 @@ use std::fs;
 
 pub mod prb1;
 pub mod prb2;
+pub mod prb6;
 
 #[derive(Debug)]
 pub struct RunError(String);
@@ -35,6 +36,20 @@ pub fn run(config: Config) -> Result<String, RunError> {
             // else if config.part == "2" {
             //     prb1::part2(&data)
             //         .map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            } else {
+                return Err(RunError(format!(
+                    "no part {} for problem {}",
+                    config.part, config.problem
+                )));
+            }
+        }
+        "6" => {
+            if config.part == "1" {
+                prb6::part1(&data)
+                    .map_err(|err| RunError(format!("failed to run problem: {}", err)))
+            } else if config.part == "2" {
+                prb6::part2(&data)
+                .map_err(|err| RunError(format!("failed to run problem: {}", err)))
             } else {
                 return Err(RunError(format!(
                     "no part {} for problem {}",
